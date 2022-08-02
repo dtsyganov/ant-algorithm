@@ -19,10 +19,10 @@ public class Config {
     public static final float CITY_SIZE = 30;
 
     //    ROAD
-    public static final float ROAD_MAX_SIZE = CITY_SIZE / 2;
+    public static final float ROAD_MAX_SIZE = CITY_SIZE / 3;
     public static final boolean SHOW_DISTANCE = false;
     public static final Color SOLUTION_COLOR = Color.WHITE;
-    public static final boolean PHEROMONE_TO_CONSOLE = false;
+    public static final boolean PHEROMONE_TO_CONSOLE = true;
 
 
     public static Color roadColorForWidth(double width) {
@@ -31,10 +31,10 @@ public class Config {
 
     private enum ColorParts {
         RED(Color::getRed), GREEN(Color::getGreen), BLUE(Color::getBlue);
-        private static final EnumSet<ColorParts> ROAD_COLOR_PARTS = EnumSet.of(BLUE);
+        private static final EnumSet<ColorParts> ROAD_COLOR_PARTS = EnumSet.of(RED, GREEN, BLUE);
         private final Function<Color, Integer> part;
-        private static final Color ROAD_BASE_COLOR_FROM = new Color(0x555533);
-        private static final Color ROAD_BASE_COLOR_TO = new Color(0x5535ff);
+        private static final Color ROAD_BASE_COLOR_FROM = new Color(0x555555);
+        private static final Color ROAD_BASE_COLOR_TO = new Color(0x777777);
         ColorParts(Function<Color, Integer> part) {
             this.part = part;
         }
@@ -48,7 +48,7 @@ public class Config {
         }
 
         private static int range(int from, int to, double width) {
-            return (int) Math.min(from + (to - from) * width / ROAD_MAX_SIZE, ROAD_MAX_SIZE);
+            return from + (to - from) * (int)Math.min(width / ROAD_MAX_SIZE, ROAD_MAX_SIZE);
         }
 
         int finalColorPart(double width) {

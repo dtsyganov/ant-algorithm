@@ -5,14 +5,16 @@ import java.util.List;
 
 public class Solution implements Element {
     private final List<City> list;
+    private final List<Road> roads;
     private final double pathLength;
 
-    public Solution(List<City> list) {
+    public Solution(List<City> list, List<Road> roads) {
         this.list = new ArrayList<>(list);
         if (list.get(0) != list.get(list.size() - 1))
             this.list.add(list.get(0));
 
         pathLength = calcPathLength();
+        this.roads = roads;
     }
 
     private double calcPathLength() {
@@ -33,5 +35,9 @@ public class Solution implements Element {
             path += cities.get(i).distanceTo(cities.get(i + 1));
         }
         return path;
+    }
+
+    public List<Road> getRoads() {
+        return roads;
     }
 }

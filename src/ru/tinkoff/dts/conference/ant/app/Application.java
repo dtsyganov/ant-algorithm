@@ -8,9 +8,7 @@ import ru.tinkoff.dts.conference.ant.app.model.Road;
 import ru.tinkoff.dts.conference.ant.app.model.Solution;
 import ru.tinkoff.dts.conference.ant.app.model.World;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.*;
 
 import static ru.tinkoff.dts.conference.ant.app.model.WorldHelper.init;
@@ -21,7 +19,7 @@ public class Application {
         LinkedBlockingQueue<Solution> queue = new LinkedBlockingQueue<>();
 
         AntAlgorithm algorithm = new AntAlgorithm(cities, queue);
-        List<Road> roads = Arrays.stream(algorithm.getWays()).flatMap(Arrays::stream).filter(Objects::nonNull).toList();
+        List<Road> roads = algorithm.getWays();
 
         World world = new World(cities, roads);
         Canvas canvas = new Canvas(world);

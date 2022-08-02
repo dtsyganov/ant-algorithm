@@ -22,7 +22,7 @@ public class SolutionDrawer implements Drawer<Solution> {
     }
 
     private void drawRoad(Graphics g, Road road) {
-        DrawHelper.drawRoadWithColor(g, road, Config.SOLUTION_COLOR, 2f);
+        DrawHelper.drawRoadWithColor(g, road, Config.SOLUTION_COLOR, 3f);
     }
 
 }

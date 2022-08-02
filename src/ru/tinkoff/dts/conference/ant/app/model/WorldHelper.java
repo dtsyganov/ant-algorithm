@@ -22,9 +22,20 @@ public class WorldHelper {
     public static List<City> createRandomCities(int amount) {
         List<City> result = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            result.add(new City(i, Rnd.getX(), Rnd.getY()));
+            City city = new City(i, Rnd.getX(), Rnd.getY());
+            while (isClose(city, result))
+                city = new City(i, Rnd.getX(), Rnd.getY());
+            result.add(city);
         }
         return result;
+    }
+
+    private static boolean isClose(City city, List<City> result) {
+        final double THRESHOLD = 50;
+        for (City nextCity : result) {
+            if (city.distanceTo(nextCity) < THRESHOLD) return true;
+        }
+        return false;
     }
 
     public static List<City> createCircleCities(int amount) {

@@ -26,5 +26,6 @@ public class World {
 
     public void setSolution(Solution solution) {
         this.solution = solution;
+        this.roads = solution.getRoads();
     }
 }

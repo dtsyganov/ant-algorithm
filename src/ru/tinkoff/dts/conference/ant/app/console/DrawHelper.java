@@ -18,8 +18,8 @@ public class DrawHelper {
         double y2 = road.getTo().getY() + Config.CITY_SIZE / 2;
         Line2D.Double line = new Line2D.Double(x1, y1, x2, y2);
 
-        g2d.setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2d.setColor(color);
+        g2d.setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2d.draw(line);
         if (Config.SHOW_DISTANCE) {
             g2d.drawString(String.format("%5.2f", road.distance()), average(x1, x2), average(y1, y2) + 20);

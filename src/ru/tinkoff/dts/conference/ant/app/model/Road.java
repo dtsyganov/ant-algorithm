@@ -7,7 +7,7 @@ import static java.lang.Math.*;
 public class Road implements Element {
     private final City from;
     private final City to;
-    private float pheromone;
+    private volatile float pheromone;
 
     public Road(City from, City to) {
         this.from = from;
@@ -35,12 +35,11 @@ public class Road implements Element {
         return pheromone;
     }
 
-    public void setPheromone(float pheromone) {
-        this.pheromone = min(AlgConfig.PHEROMONE_MAX, max(0, pheromone));
+    public void updatePheromoneWith(float pheromoneAdded) {
+        pheromone = min(AlgConfig.PHEROMONE_MAX, max(0, pheromone + pheromoneAdded));
     }
 
-    public void updatePheromoneWith(float pheromoneAdded) {
+    public void evaporate() {
         pheromone = pheromone * (1 - AlgConfig.PHEROMONE_EVAPORATED);
-        pheromone = min(AlgConfig.PHEROMONE_MAX, max(0, pheromone + pheromoneAdded));
     }
 }

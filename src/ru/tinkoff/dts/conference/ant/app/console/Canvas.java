@@ -17,15 +17,17 @@ public class Canvas extends JFrame {
             @Override
             public void paint(Graphics g) {
                 super.paint(g);
-                for (Road road : world.getRoads()) {
+                Solution solution = world.getSolution();
+                var roads = solution != null ? solution.getRoads() : world.getRoads();
+                for (Road road : roads) {
                     drawers.drawer(road).draw(g, road);
                 }
                 for (City city : world.getCities()) {
                     drawers.drawer(city).draw(g, city);
                 }
-                Solution solution = world.getSolution();
-                if (solution != null)
+                if (solution != null) {
                     drawers.drawer(solution).draw(g, solution);
+                }
             }
         };
         add(panel);
