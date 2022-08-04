@@ -21,8 +21,10 @@ public class Config {
     //    ROAD
     public static final float ROAD_MAX_SIZE = CITY_SIZE / 3;
     public static final boolean SHOW_DISTANCE = false;
-    public static final Color SOLUTION_COLOR = Color.WHITE;
     public static final boolean PHEROMONE_TO_CONSOLE = true;
+
+    public static final Color SOLUTION_COLOR = Color.WHITE;
+    public static final Color BEST_SOLUTION_COLOR = Color.YELLOW;
 
 
     public static Color roadColorForWidth(double width) {

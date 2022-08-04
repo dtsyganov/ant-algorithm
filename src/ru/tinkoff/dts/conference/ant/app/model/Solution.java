@@ -40,4 +40,16 @@ public class Solution implements Element {
     public List<Road> getRoads() {
         return roads;
     }
+
+    public Solution min(Solution solution) {
+        return (solution == null || this.getPathLength() < solution.getPathLength())
+                ? this
+                : solution;
+    }
+
+    public BestSolution min(BestSolution solution) {
+        return (solution == null || this.getPathLength() < solution.getPathLength())
+                ? new BestSolution(this.getList())
+                : solution;
+    }
 }

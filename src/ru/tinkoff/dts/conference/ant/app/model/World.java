@@ -7,9 +7,10 @@ public class World {
     private List<Road> roads;
     private Solution solution;
 
-    public World(List<City> cities, List<Road> roads) {
+    private BestSolution bestSolution;
+
+    public World(List<City> cities) {
         this.cities = cities;
-        this.roads = roads;
     }
 
     public List<City> getCities() {
@@ -27,5 +28,13 @@ public class World {
     public void setSolution(Solution solution) {
         this.solution = solution;
         this.roads = solution.getRoads();
+    }
+
+    public BestSolution getBestSolution() {
+        return bestSolution;
+    }
+
+    public void setBestSolution(BestSolution bestSolution) {
+        this.bestSolution = bestSolution;
     }
 }

@@ -11,6 +11,10 @@ public class DrawHelper {
     }
 
     static void drawRoadWithColor(Graphics g, Road road, Color color, float width) {
+        drawRoadWithColor(g, road, color, width, false);
+    }
+
+    static void drawRoadWithColor(Graphics g, Road road, Color color, float width, boolean dashed) {
         Graphics2D g2d = (Graphics2D) g;
         double x1 = road.getFrom().getX() + Config.CITY_SIZE / 2;
         double y1 = road.getFrom().getY() + Config.CITY_SIZE / 2;
@@ -19,7 +23,10 @@ public class DrawHelper {
         Line2D.Double line = new Line2D.Double(x1, y1, x2, y2);
 
         g2d.setColor(color);
-        g2d.setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        if (dashed)
+            g2d.setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1, new float[]{30, 30}, 0));
+        else
+            g2d.setStroke(new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2d.draw(line);
         if (Config.SHOW_DISTANCE) {
             g2d.drawString(String.format("%5.2f", road.distance()), average(x1, x2), average(y1, y2) + 20);

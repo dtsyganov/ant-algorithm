@@ -5,7 +5,9 @@ import ru.tinkoff.dts.conference.ant.app.model.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 public class Canvas extends JFrame {
 
@@ -19,7 +21,7 @@ public class Canvas extends JFrame {
                 super.paint(g);
                 Solution solution = world.getSolution();
                 var roads = solution != null ? solution.getRoads() : world.getRoads();
-                for (Road road : roads) {
+                for (Road road : Optional.ofNullable(roads).orElse(new ArrayList<>())) {
                     drawers.drawer(road).draw(g, road);
                 }
                 for (City city : world.getCities()) {
@@ -28,13 +30,17 @@ public class Canvas extends JFrame {
                 if (solution != null) {
                     drawers.drawer(solution).draw(g, solution);
                 }
+                BestSolution bestSolution = world.getBestSolution();
+                if (bestSolution != null) {
+                    drawers.drawer(bestSolution).draw(g, bestSolution);
+                }
             }
         };
         add(panel);
         panel.setBackground(Config.BACKGROUND_COLOR);
         panel.setPreferredSize(new Dimension(Config.MAX_X, Config.MAX_Y));
         panel.validate();
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
     }
@@ -44,7 +50,8 @@ public class Canvas extends JFrame {
                 Map.of(
                         City.class, new CityDrawer(),
                         Road.class, new RoadDrawer(),
-                        Solution.class, new SolutionDrawer()
+//                        BestSolution.class, new SolutionDrawer(true),
+                        Solution.class, new SolutionDrawer(false)
                 );
 
         @SuppressWarnings("unchecked")

@@ -60,8 +60,7 @@ public class AntAlgorithm {
             solution = applySwapMiddlePairForEachFour(solution);
         }
 
-        bestSolution = (bestSolution == null || bestSolution.getPathLength() > solution.getPathLength()) ?
-                solution : bestSolution;
+        bestSolution = solution.min(bestSolution);
 
         notificationQueue.add(bestSolution);
         return solution;

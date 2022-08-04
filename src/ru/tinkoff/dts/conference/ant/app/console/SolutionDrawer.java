@@ -9,6 +9,13 @@ import java.awt.*;
 import java.util.List;
 
 public class SolutionDrawer implements Drawer<Solution> {
+    private final boolean best;
+    private final Color solutionColor;
+
+    public SolutionDrawer(boolean best) {
+        this.best = best;
+        this.solutionColor = best ? Config.BEST_SOLUTION_COLOR : Config.SOLUTION_COLOR;
+    }
 
     public void draw(Graphics g, Solution solution) {
         if (solution.getList() == null || solution.getList().isEmpty()) return;
@@ -18,11 +25,16 @@ public class SolutionDrawer implements Drawer<Solution> {
         }
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawString(String.format("%7.2f", solution.getPathLength()), 10, 10);
+        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g2d.drawString(String.format("%7.2f", solution.getPathLength()), 10, 20 + delta());
+    }
+
+    private int delta() {
+        return best ? 20 : 0;
     }
 
     private void drawRoad(Graphics g, Road road) {
-        DrawHelper.drawRoadWithColor(g, road, Config.SOLUTION_COLOR, 3f);
+        DrawHelper.drawRoadWithColor(g, road, solutionColor, best ? 1f : 3f, best);
     }
 
 }
