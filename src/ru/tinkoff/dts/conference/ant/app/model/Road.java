@@ -38,10 +38,10 @@ public class Road implements Element {
     }
 
     public void updatePheromoneWith(float pheromoneAdded) {
-        pheromone.getAndAccumulate(pheromoneAdded, (cur, add) -> min(AlgConfig.PHEROMONE_MAX, max(0, cur + add)));
+        pheromone.getAndAccumulate(pheromoneAdded, (cur, add) -> min(AlgConfig.PHEROMONE_MAX, max(AlgConfig.PHEROMONE_MIN, cur + add)));
     }
 
     public void evaporate() {
-        pheromone.getAndAccumulate(AlgConfig.PHEROMONE_EVAPORATED, (cur, koeff)-> cur * (1 - koeff));
+        pheromone.getAndAccumulate(AlgConfig.PHEROMONE_EVAPORATED, (cur, koeff)-> max(AlgConfig.PHEROMONE_MIN, cur * (1 - koeff)));
     }
 }

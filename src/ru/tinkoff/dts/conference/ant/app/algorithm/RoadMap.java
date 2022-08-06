@@ -23,11 +23,11 @@ public class RoadMap {
     }
 
     public Road findRoad(City from, City to) {
-        return ways[from.getId()][to.getId()];
+        return ways[from.id()][to.id()];
     }
 
     public List<Road> getRoadsFrom(City city) {
-        return Arrays.stream(ways[city.getId()])
+        return Arrays.stream(ways[city.id()])
                 .filter(Objects::nonNull)
                 .toList();
     }

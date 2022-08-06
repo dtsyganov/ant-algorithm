@@ -20,8 +20,8 @@ public class Rnd {
         return RANDOM.nextDouble();
     }
 
-    public static int variation(int mod) {
-        return RANDOM.nextInt(mod * 2) - mod;
+    public static double variation(int mod) {
+        return RANDOM.nextInt(mod * 2) - (double) mod;
     }
 
     public static int getInDiameter(int diameter) {

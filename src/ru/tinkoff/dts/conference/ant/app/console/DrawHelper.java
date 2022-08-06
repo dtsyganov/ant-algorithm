@@ -16,10 +16,10 @@ public class DrawHelper {
 
     static void drawRoadWithColor(Graphics g, Road road, Color color, float width, boolean dashed) {
         Graphics2D g2d = (Graphics2D) g;
-        double x1 = road.getFrom().getX() + Config.CITY_SIZE / 2;
-        double y1 = road.getFrom().getY() + Config.CITY_SIZE / 2;
-        double x2 = road.getTo().getX() + Config.CITY_SIZE / 2;
-        double y2 = road.getTo().getY() + Config.CITY_SIZE / 2;
+        double x1 = road.getFrom().x() + Config.CITY_SIZE / 2;
+        double y1 = road.getFrom().y() + Config.CITY_SIZE / 2;
+        double x2 = road.getTo().x() + Config.CITY_SIZE / 2;
+        double y2 = road.getTo().y() + Config.CITY_SIZE / 2;
         Line2D.Double line = new Line2D.Double(x1, y1, x2, y2);
 
         g2d.setColor(color);

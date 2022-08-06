@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Logger {
+    private Logger() {
+    }
+
     static void iteration(int iter, Solution currentSolution) {
         System.out.println("iter " + iter + " " + currentSolution.getPathLength());
     }
@@ -26,7 +29,7 @@ public class Logger {
     private static String getHighest(List<Float> sorted) {
         return sorted.stream()
                 .sorted(Comparator.reverseOrder())
-                .limit(5)
+                .limit(15)
                 .sorted()
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
@@ -34,7 +37,7 @@ public class Logger {
 
     private static String getLowest(List<Float> sorted) {
         return sorted.stream()
-                .limit(5)
+                .limit(1)
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
     }
