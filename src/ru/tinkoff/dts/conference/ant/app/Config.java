@@ -24,7 +24,7 @@ public class Config {
     public static final boolean SHOW_DISTANCE = false;
     public static final boolean PHEROMONE_TO_CONSOLE = true;
 
-    public static final Color SOLUTION_COLOR = Color.WHITE;
+    public static final Color SOLUTION_COLOR = new Color(0xFFD700);
     public static final Color BEST_SOLUTION_COLOR = Color.YELLOW;
 
 
