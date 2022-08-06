@@ -33,7 +33,8 @@ public class AntAlgorithm {
             for (int i = 0; i < cities.size(); i++) {
                 chooseStepForEveryAnt();
             }
-            updatePheromone();
+            updatePheromoneMap();
+
             Solution currentSolution = chooseBestSolution();
 
             Logger.iteration(iter, currentSolution);
@@ -86,7 +87,7 @@ public class AntAlgorithm {
         return List.of(list.get(0), list.get(2), list.get(1), list.get(3));
     }
 
-    private void updatePheromone() {
+    private void updatePheromoneMap() {
         roadMap.evaporate();
         ants.parallelStream()
                 .forEach(roadMap::updateWithPheromone);

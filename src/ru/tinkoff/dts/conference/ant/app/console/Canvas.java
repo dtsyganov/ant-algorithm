@@ -24,15 +24,15 @@ public class Canvas extends JFrame {
                 for (Road road : Optional.ofNullable(roads).orElse(new ArrayList<>())) {
                     drawers.drawer(road).draw(g, road);
                 }
-                for (City city : world.getCities()) {
-                    drawers.drawer(city).draw(g, city);
-                }
                 if (solution != null) {
                     drawers.drawer(solution).draw(g, solution);
                 }
                 BestSolution bestSolution = world.getBestSolution();
                 if (bestSolution != null) {
                     drawers.drawer(bestSolution).draw(g, bestSolution);
+                }
+                for (City city : world.getCities()) {
+                    drawers.drawer(city).draw(g, city);
                 }
             }
         };

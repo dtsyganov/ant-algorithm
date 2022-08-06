@@ -11,17 +11,17 @@ public class ProbabilityHelper {
     }
 
     public static double[] calcProbabilities(List<Road> roads) {
-        double[] probabilities = new double[roads.size()];
-        for (int i = 0; i < roads.size(); i++) {
-            Road road = roads.get(i);
-            probabilities[i] = calcRoadChooseProbability(road);
-        }
-        return probabilities;
+        return roads
+                .stream()
+                .mapToDouble(ProbabilityHelper::calcRoadChooseProbability)
+                .toArray();
     }
 
     private static double calcRoadChooseProbability(Road road) {
-        return Math.pow(road.getPheromone(), AlgConfig.ALFA)
-                * Math.pow(AlgConfig.DISTANCE_COEFFICIENT / road.distance(), AlgConfig.BETA);
+        return Math.pow(
+                road.getPheromone(), AlgConfig.ALFA
+        ) * Math.pow(
+                AlgConfig.DISTANCE_COEFFICIENT / road.distance(), AlgConfig.BETA);
     }
 
     public static int chooseWithProbability(double[] probabilities) {

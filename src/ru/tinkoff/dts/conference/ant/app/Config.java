@@ -16,7 +16,7 @@ public class Config {
     public static final double CITY_CLOSEST_DISTANCE_THRESHOLD = 50;
     public static final Color CITY_COLOR = new Color(0x55cc33);
     public static final Color CITY_BORDER_COLOR = new Color(0x888888);
-    public static final double CITY_BORDER_SIZE = 10;
+    public static final double CITY_BORDER_SIZE = 8;
     public static final float CITY_SIZE = 30;
 
     //    ROAD
@@ -24,7 +24,7 @@ public class Config {
     public static final boolean SHOW_DISTANCE = false;
     public static final boolean PHEROMONE_TO_CONSOLE = true;
 
-    public static final Color SOLUTION_COLOR = new Color(0xFFD700);
+    public static final Color SOLUTION_COLOR = new Color(0xD2691E);
     public static final Color BEST_SOLUTION_COLOR = Color.YELLOW;
 
 
@@ -37,7 +37,7 @@ public class Config {
         private static final EnumSet<ColorParts> ROAD_COLOR_PARTS = EnumSet.of(RED, GREEN, BLUE);
         private final Function<Color, Integer> part;
         private static final Color ROAD_BASE_COLOR_FROM = new Color(0x333333);
-        private static final Color ROAD_BASE_COLOR_TO = new Color(0x555555);
+        private static final Color ROAD_BASE_COLOR_TO = new Color(0x333333);
         ColorParts(Function<Color, Integer> part) {
             this.part = part;
         }
