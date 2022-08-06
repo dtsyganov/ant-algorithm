@@ -9,7 +9,7 @@ import java.awt.*;
 public class RoadDrawer implements Drawer<Road> {
 
     public void draw(Graphics g, Road road) {
-        if (road.getPheromone() < AlgConfig.INITIAL_PHEROMONE / 100)
+        if (road.getPheromone() < AlgConfig.INITIAL_PHEROMONE / 2)
             return;
         float width = normalize(road.getPheromone());
         DrawHelper.drawRoadWithColor(g, road,
@@ -19,6 +19,6 @@ public class RoadDrawer implements Drawer<Road> {
     }
 
     private static float normalize(float pheromone) {
-        return Math.min(Config.ROAD_MAX_SIZE, Config.ROAD_MAX_SIZE * pheromone / 10);
+        return Math.min(Config.ROAD_MAX_SIZE, Config.ROAD_MAX_SIZE * pheromone / 5);
     }
 }

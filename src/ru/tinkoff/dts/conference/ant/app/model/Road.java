@@ -2,12 +2,14 @@ package ru.tinkoff.dts.conference.ant.app.model;
 
 import ru.tinkoff.dts.conference.ant.app.algorithm.AlgConfig;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import static java.lang.Math.*;
 
 public class Road implements Element {
     private final City from;
     private final City to;
-    private volatile float pheromone;
+    private final AtomicReference<Float> pheromone = new AtomicReference<>();
 
     public Road(City from, City to) {
         this.from = from;
@@ -17,7 +19,7 @@ public class Road implements Element {
     public Road(City from, City to, float pheromone) {
         this.from = from;
         this.to = to;
-        this.pheromone = pheromone;
+        this.pheromone.set(pheromone);
     }
 
     public double distance() {
@@ -32,14 +34,14 @@ public class Road implements Element {
     }
 
     public float getPheromone() {
-        return pheromone;
+        return pheromone.get();
     }
 
     public void updatePheromoneWith(float pheromoneAdded) {
-        pheromone = min(AlgConfig.PHEROMONE_MAX, max(0, pheromone + pheromoneAdded));
+        pheromone.getAndAccumulate(pheromoneAdded, (cur, add) -> min(AlgConfig.PHEROMONE_MAX, max(0, cur + add)));
     }
 
     public void evaporate() {
-        pheromone = pheromone * (1 - AlgConfig.PHEROMONE_EVAPORATED);
+        pheromone.getAndAccumulate(AlgConfig.PHEROMONE_EVAPORATED, (cur, koeff)-> cur * (1 - koeff));
     }
 }

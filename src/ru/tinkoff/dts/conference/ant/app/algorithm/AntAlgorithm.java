@@ -1,17 +1,18 @@
 package ru.tinkoff.dts.conference.ant.app.algorithm;
 
 import ru.tinkoff.dts.conference.ant.app.Config;
-import ru.tinkoff.dts.conference.ant.app.Rnd;
 import ru.tinkoff.dts.conference.ant.app.model.Ant;
 import ru.tinkoff.dts.conference.ant.app.model.City;
 import ru.tinkoff.dts.conference.ant.app.model.Road;
 import ru.tinkoff.dts.conference.ant.app.model.Solution;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+
+import static ru.tinkoff.dts.conference.ant.app.algorithm.ProbabilityHelper.calcProbabilities;
+import static ru.tinkoff.dts.conference.ant.app.algorithm.ProbabilityHelper.chooseWithProbability;
 
 public class AntAlgorithm {
     private final List<City> cities;
@@ -39,15 +40,6 @@ public class AntAlgorithm {
             clearSolutions();
         }
         return bestSolution;
-    }
-
-    private void clearSolutions() {
-        for (Ant ant : ants) {
-            ant.clearPath();
-        }
-        if (Config.PHEROMONE_TO_CONSOLE) {
-            Logger.pheromoneToConsole(roadMap.getWays());
-        }
     }
 
     private Solution chooseBestSolution() {
@@ -96,20 +88,13 @@ public class AntAlgorithm {
 
     private void updatePheromone() {
         roadMap.evaporate();
-        for (Ant ant : ants) {
-            float pheromone = calcPheromone(ant);
-            roadMap.updateWithPheromone(ant, pheromone);
-        }
-    }
-
-    private float calcPheromone(Ant ant) {
-        return (float) (AlgConfig.DISTANCE_COEFFICIENT / ant.getPathLength());
+        ants.parallelStream()
+                .forEach(roadMap::updateWithPheromone);
     }
 
     private void chooseStepForEveryAnt() {
-        for (Ant ant : ants) {
-            ant.addToPath(chooseNextCity(ant));
-        }
+        ants.parallelStream()
+                .forEach(ant -> ant.addToPath(chooseNextCity(ant)));
     }
 
     private City chooseNextCity(Ant ant) {
@@ -124,29 +109,8 @@ public class AntAlgorithm {
         if (roads.size() == 1) return roads.get(0);
 
         double[] probabilities = calcProbabilities(roads);
-        double sum = Arrays.stream(probabilities).sum();
-
-        double chooser = 0;
-        double rnd = Rnd.get();
-        for (int i = 0; i < roads.size(); i++) {
-            chooser += probabilities[i] / sum;
-            if (chooser > rnd) return roads.get(i);
-        }
-        return roads.get(roads.size() - 1);
-    }
-
-    private double[] calcProbabilities(List<Road> roads) {
-        double[] probabilities = new double[roads.size()];
-        for (int i = 0; i < roads.size(); i++) {
-            Road road = roads.get(i);
-            probabilities[i] = calcWayChooseProbability(road);
-        }
-        return probabilities;
-    }
-
-    private double calcWayChooseProbability(Road road) {
-        return Math.pow(road.getPheromone(), AlgConfig.ALFA)
-                * Math.pow(AlgConfig.DISTANCE_COEFFICIENT / road.distance(), AlgConfig.BETA);
+        int index = chooseWithProbability(probabilities);
+        return roads.get(index);
     }
 
     private void createAnts() {
@@ -155,8 +119,13 @@ public class AntAlgorithm {
         }
     }
 
-    public List<Road> getWays() {
-        return roadMap.getWays();
+    private void clearSolutions() {
+        for (Ant ant : ants) {
+            ant.clearPath();
+        }
+        if (Config.PHEROMONE_TO_CONSOLE) {
+            Logger.pheromoneToConsole(roadMap.getWays());
+        }
     }
 
 
