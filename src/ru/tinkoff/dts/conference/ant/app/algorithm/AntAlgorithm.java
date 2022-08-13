@@ -34,16 +34,14 @@ public class AntAlgorithm {
                 chooseStepForEveryAnt();
             }
             updatePheromoneMap();
+            chooseBestSolution(iter);
 
-            Solution currentSolution = chooseBestSolution();
-
-            Logger.iteration(iter, currentSolution);
             clearSolutions();
         }
         return bestSolution;
     }
 
-    private Solution chooseBestSolution() {
+    private Solution chooseBestSolution(int iter) {
         Ant bestAnt = ants.stream()
                 .min(Comparator.comparingDouble(Ant::getPathLength))
                 .orElseThrow();
@@ -56,6 +54,9 @@ public class AntAlgorithm {
         bestSolution = solution.min(bestSolution);
 
         notificationQueue.add(bestSolution);
+
+        Logger.iteration(iter, solution);
+
         return solution;
     }
 
